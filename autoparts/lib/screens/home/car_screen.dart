@@ -24,7 +24,7 @@ class CarScreen extends StatelessWidget {
         // //   icon: const Icon(Icons.menu),
         // // ),
       ),
-      body: Center(
+      body: const Center(
         child: Text('CarScreen'),
       ),
     );

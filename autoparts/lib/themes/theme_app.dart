@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ThemeApp {
-  static Color primary = const Color(0xff02AAB0);
-  static Color secondary = const Color(0xff00CDAC);
+  static Color primary = const Color.fromARGB(255, 176, 22, 2);
+  static Color secondary = const Color.fromARGB(255, 138, 17, 2);
 
   static ThemeData lightTheme = ThemeData.light().copyWith(
     appBarTheme: AppBarTheme(
