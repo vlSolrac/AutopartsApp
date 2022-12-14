@@ -1,3 +1,4 @@
+import 'package:autoparts/providers/providers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:autoparts/firebase_options.dart';
@@ -20,7 +21,7 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        //ChangeNotifierProvider(create: (_) => NameProvider),
+        ChangeNotifierProvider(create: (_) => LoginFormProvider()),
       ],
       child: const MyApp(),
     );
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       title: 'Autoparts',
       theme: ThemeApp.lightTheme,
       routes: RoutesApp.routes,
-      initialRoute: RoutesApp.home,
+      initialRoute: RoutesApp.splash,
     );
   }
 }
