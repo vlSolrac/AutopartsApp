@@ -1,7 +1,6 @@
 import 'package:autoparts/screens/auth/sign_in.dart';
 import 'package:autoparts/screens/auth/sign_up.dart';
 import 'package:autoparts/themes/themes.dart';
-import 'package:autoparts/widgets/auth/bubble_indicator_painter.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
