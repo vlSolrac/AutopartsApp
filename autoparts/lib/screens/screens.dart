@@ -1,4 +1,6 @@
 
+export 'package:autoparts/screens/auth/auth_background.dart';
+
 export 'package:autoparts/screens/add/add_car_part_screen.dart';
 export 'package:autoparts/screens/add/add_car_screen.dart';
 export 'package:autoparts/screens/auth/auth_screen.dart';
