@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:autoparts/screens/screens.dart';
 
 class RoutesApp {
-  static String home = "home";
-  static String car = "car";
   static String splash = "splash";
   static String getStart = "get_start";
-  static String detailCar = "detailCar";
+  static String auth = "auth";
+  static String home = "home";
+  static String car = "car";
   static String addCar = "addCar";
   static String addCarPart = "addCarPart";
-  static String login = "login";
-  static String signup = "signup";
+  static String detailCar = "detailCar";
   static String detailCarPart = "detailCarPart";
 
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -19,8 +18,7 @@ class RoutesApp {
     car: (p0) => const CarScreen(),
     getStart: (p0) => const GetStartScreen(),
     splash: (p0) => const SplashScreen(),
-    login: (p0) => const LoginScreen(),
-    signup: (p0) => const SignupScreen(),
+    auth: (p0) => const AuthScreen(),
     addCar: (p0) => const AddCarScreen(),
     addCarPart: (p0) => const AddPartCarScreen(),
     detailCar: (p0) => const CarDetailScreen(),

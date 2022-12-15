@@ -1,7 +1,7 @@
+
 export 'package:autoparts/screens/add/add_car_part_screen.dart';
 export 'package:autoparts/screens/add/add_car_screen.dart';
-export 'package:autoparts/screens/auth/login_screen.dart';
-export 'package:autoparts/screens/auth/signup_screen.dart';
+export 'package:autoparts/screens/auth/auth_screen.dart';
 export 'package:autoparts/screens/detail/car_detail_screen.dart';
 export 'package:autoparts/screens/detail/cart_part_detail_screen.dart';
 export 'package:autoparts/screens/home/car_screen.dart';

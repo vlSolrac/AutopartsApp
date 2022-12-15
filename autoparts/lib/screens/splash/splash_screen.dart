@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'package:autoparts/routes/routes_app.dart';
 import 'package:autoparts/themes/themes.dart';
 import 'package:autoparts/widgets/widgets.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SplashScreen extends StatefulWidget {
