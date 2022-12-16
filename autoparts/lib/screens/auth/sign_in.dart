@@ -38,84 +38,80 @@ class _SignInState extends State<SignIn> {
                 elevation: 2.0,
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: SizedBox(
                   width: 300.0,
                   height: 190.0,
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: focusNodeEmail,
-                          controller: loginEmailController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: const TextStyle(
-                              fontFamily: 'WorkSansSemiBold',
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              Icons.abc,
-                              color: Colors.black,
-                              size: 22.0,
+                  child: Form(
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                          child: TextField(
+                            focusNode: focusNodeEmail,
+                            controller: loginEmailController,
+                            keyboardType: TextInputType.emailAddress,
+                            style: const TextStyle(
+                                fontSize: 16.0, color: Colors.black),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              icon: Icon(
+                                Icons.abc,
+                                color: Colors.black,
+                                size: 22.0,
+                              ),
+                              hintText: 'Email Address',
+                              hintStyle: TextStyle(fontSize: 17.0),
                             ),
-                            hintText: 'Email Address',
-                            hintStyle: TextStyle(
-                                fontFamily: 'WorkSansSemiBold', fontSize: 17.0),
+                            onSubmitted: (_) {
+                              focusNodePassword.requestFocus();
+                            },
                           ),
-                          onSubmitted: (_) {
-                            focusNodePassword.requestFocus();
-                          },
                         ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: focusNodePassword,
-                          controller: loginPasswordController,
-                          obscureText: _obscureTextPassword,
-                          style: const TextStyle(
-                              fontFamily: 'WorkSansSemiBold',
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: const Icon(
-                              Icons.lock,
-                              size: 22.0,
-                              color: Colors.black,
-                            ),
-                            hintText: 'Password',
-                            hintStyle: const TextStyle(
-                                fontFamily: 'WorkSansSemiBold', fontSize: 17.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleLogin,
-                              child: Icon(
-                                _obscureTextPassword
-                                    ? Icons.remove_red_eye
-                                    : Icons.remove_red_eye_outlined,
-                                size: 15.0,
+                        Container(
+                          width: 250.0,
+                          height: 1.0,
+                          color: Colors.grey[400],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
+                          child: TextField(
+                            focusNode: focusNodePassword,
+                            controller: loginPasswordController,
+                            obscureText: _obscureTextPassword,
+                            style: const TextStyle(
+                                fontSize: 16.0, color: Colors.black),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              icon: const Icon(
+                                Icons.lock,
+                                size: 22.0,
                                 color: Colors.black,
                               ),
+                              hintText: 'Password',
+                              hintStyle: const TextStyle(fontSize: 17.0),
+                              suffixIcon: GestureDetector(
+                                onTap: _toggleLogin,
+                                child: Icon(
+                                  _obscureTextPassword
+                                      ? Icons.remove_red_eye
+                                      : Icons.remove_red_eye_outlined,
+                                  size: 15.0,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
+                            onSubmitted: (_) {
+                              _toggleSignInButton();
+                            },
+                            textInputAction: TextInputAction.go,
                           ),
-                          onSubmitted: (_) {
-                            _toggleSignInButton();
-                          },
-                          textInputAction: TextInputAction.go,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -152,119 +148,14 @@ class _SignInState extends State<SignIn> {
                     padding:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 42.0),
                     child: Text(
-                      'LOGIN',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25.0,
-                          fontFamily: 'WorkSansBold'),
+                      'ENTRAR',
+                      style: TextStyle(color: Colors.white, fontSize: 25.0),
                     ),
                   ),
                   onPressed: () => CustomSnackBar(
                       context, const Text('Login button pressed')),
                 ),
               )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: Colors.white,
-                      fontSize: 16.0,
-                      fontFamily: 'WorkSansMedium'),
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: <Color>[
-                          Colors.white10,
-                          Colors.white,
-                        ],
-                        begin: FractionalOffset(0.0, 0.0),
-                        end: FractionalOffset(1.0, 1.0),
-                        stops: <double>[0.0, 1.0],
-                        tileMode: TileMode.clamp),
-                  ),
-                  width: 100.0,
-                  height: 1.0,
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                  child: Text(
-                    'Or',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        fontFamily: 'WorkSansMedium'),
-                  ),
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: <Color>[
-                          Colors.white,
-                          Colors.white10,
-                        ],
-                        begin: FractionalOffset(0.0, 0.0),
-                        end: FractionalOffset(1.0, 1.0),
-                        stops: <double>[0.0, 1.0],
-                        tileMode: TileMode.clamp),
-                  ),
-                  width: 100.0,
-                  height: 1.0,
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0, right: 40.0),
-                child: GestureDetector(
-                  onTap: () => CustomSnackBar(
-                      context, const Text('Facebook button pressed')),
-                  child: Container(
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: const Icon(
-                      Icons.facebook,
-                      color: Color(0xFF0084ff),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: GestureDetector(
-                  onTap: () => CustomSnackBar(
-                      context, const Text('Google button pressed')),
-                  child: Container(
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child:  const Icon(
-                      Icons.golf_course,
-                      color: Color(0xFF0084ff),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ],

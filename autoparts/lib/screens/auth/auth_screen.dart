@@ -15,6 +15,7 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen>
     with SingleTickerProviderStateMixin {
   late PageController _pageController;
+  bool isSignup = false;
 
   Color left = Colors.black;
   Color right = Colors.white;
@@ -35,7 +36,7 @@ class _AuthScreenState extends State<AuthScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-      physics: const ClampingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
@@ -45,22 +46,19 @@ class _AuthScreenState extends State<AuthScreen>
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-                colors: <Color>[
-                  ThemeApp.loginGradientStart,
-                  ThemeApp.loginGradientEnd
+                colors: [
+                  Color(0xffED213A),
+                  Color.fromARGB(255, 192, 61, 0),
                 ],
-                begin: FractionalOffset(0.0, 0.0),
-                end: FractionalOffset(1.0, 1.0),
-                stops: <double>[0.0, 1.0],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
                 tileMode: TileMode.clamp),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: _buildMenuBar(context),
-              ),
+              const SizedBox(height: 50),
+              _buildMenuBar(context),
               Expanded(
                 flex: 2,
                 child: PageView(
@@ -70,11 +68,13 @@ class _AuthScreenState extends State<AuthScreen>
                     FocusScope.of(context).requestFocus(FocusNode());
                     if (i == 0) {
                       setState(() {
+                        isSignup = false;
                         right = Colors.white;
                         left = Colors.black;
                       });
                     } else if (i == 1) {
                       setState(() {
+                        isSignup = true;
                         right = Colors.black;
                         left = Colors.white;
                       });
@@ -100,72 +100,79 @@ class _AuthScreenState extends State<AuthScreen>
   }
 
   Widget _buildMenuBar(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
-        width: 300.0,
-        height: 50.0,
-        decoration: const BoxDecoration(
-          color: Color(0x552B2B2B),
-          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              width: 150,
-              height: 70,
+      width: size.width * 0.9,
+      height: size.height * 0.07,
+      decoration: const BoxDecoration(
+        color: Color(0x552B2B2B),
+        borderRadius: BorderRadius.all(Radius.circular(50)),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeOutBack,
+            right: isSignup ? 0 : size.width * 0.45,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.bounceOut,
+              width: size.width * 0.45,
+              height: 55,
               decoration: BoxDecoration(
                   color: Colors.amberAccent,
                   borderRadius: BorderRadius.circular(50)),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Expanded(
-                  child: TextButton(
-                    style: ButtonStyle(
-                      overlayColor:
-                          MaterialStateProperty.all(Colors.transparent),
-                    ),
-                    onPressed: _onSignInButtonPress,
-                    child: Text(
-                      'Existing',
-                      style: TextStyle(
-                          color: left,
-                          fontSize: 16.0,
-                          fontFamily: 'WorkSansSemiBold'),
-                    ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: TextButton(
+                  style: ButtonStyle(
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  ),
+                  onPressed: _onSignInButtonPress,
+                  child: Text(
+                    'Entrar',
+                    style: TextStyle(color: left, fontSize: 16.0),
                   ),
                 ),
-                //Container(height: 33.0, width: 1.0, color: Colors.white),
-                Expanded(
-                  child: TextButton(
-                    style: ButtonStyle(
-                      overlayColor:
-                          MaterialStateProperty.all(Colors.transparent),
-                    ),
-                    onPressed: _onSignUpButtonPress,
-                    child: Text(
-                      'New',
-                      style: TextStyle(
-                          color: right,
-                          fontSize: 16.0,
-                          fontFamily: 'WorkSansSemiBold'),
-                    ),
+              ),
+              //Container(height: 33.0, width: 1.0, color: Colors.white),
+              Expanded(
+                child: TextButton(
+                  style: ButtonStyle(
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  ),
+                  onPressed: _onSignUpButtonPress,
+                  child: Text(
+                    'Crear cuenta',
+                    style: TextStyle(color: right, fontSize: 16.0),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ));
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   void _onSignInButtonPress() {
     _pageController.animateToPage(0,
         duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+    isSignup = false;
+    print(isSignup);
   }
 
   void _onSignUpButtonPress() {
     _pageController?.animateToPage(1,
         duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+    isSignup = true;
+
+    print(isSignup);
   }
 }
