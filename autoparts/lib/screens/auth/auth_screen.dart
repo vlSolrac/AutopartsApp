@@ -1,7 +1,9 @@
 import 'package:autoparts/screens/auth/sign_in.dart';
 import 'package:autoparts/screens/auth/sign_up.dart';
 import 'package:autoparts/screens/screens.dart';
+import 'package:autoparts/themes/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class AuthScreen extends StatefulWidget {
 //Parametes.
@@ -36,20 +38,20 @@ class _AuthScreenState extends State<AuthScreen>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: AuthBackground(
+      body: AuthBackground(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
+              LottieBuilder.asset(AssetsApp.carBlack),
               _buildMenuBar(context),
-              Expanded(
-                flex: 2,
+              SizedBox(
+                width: double.infinity,
+                height: size.height * 0.4,
                 child: PageView(
                   controller: _pageController,
-                  physics: const ClampingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   onPageChanged: (int i) {
                     FocusScope.of(context).requestFocus(FocusNode());
                     if (i == 0) {
@@ -66,15 +68,9 @@ class _AuthScreenState extends State<AuthScreen>
                       });
                     }
                   },
-                  children: <Widget>[
-                    ConstrainedBox(
-                      constraints: const BoxConstraints.expand(),
-                      child: const SignIn(),
-                    ),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints.expand(),
-                      child: const SignUp(),
-                    ),
+                  children: const [
+                    SignIn(),
+                    SignUp(),
                   ],
                 ),
               ),
