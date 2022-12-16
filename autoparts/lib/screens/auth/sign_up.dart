@@ -36,6 +36,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.only(top: 23.0),
       child: SingleChildScrollView(
@@ -46,14 +47,13 @@ class _SignUpState extends State<SignUp> {
               alignment: Alignment.topCenter,
               children: <Widget>[
                 Card(
-                  elevation: 2.0,
+                  elevation: 3.0,
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: SizedBox(
-                    width: 300.0,
-                    height: 360.0,
+                    width: size.width * 0.9,
                     child: Form(
                       child: Column(
                         children: [

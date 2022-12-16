@@ -19,6 +19,14 @@ class _SignInState extends State<SignIn> {
   bool _obscureTextPassword = true;
 
   @override
+  void initState() {
+    super.initState();
+    focusNodeEmail.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   void dispose() {
     focusNodeEmail.dispose();
     focusNodePassword.dispose();
@@ -38,38 +46,48 @@ class _SignInState extends State<SignIn> {
               alignment: Alignment.center,
               children: [
                 Card(
-                  elevation: 2.0,
+                  elevation: 3.0,
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: SizedBox(
-                    width: 300.0,
-                    height: 190.0,
+                    width: size.width * 0.9,
+                    height: size.height * 0.3,
                     child: Form(
                       child: Column(
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 20.0,
-                                left: 25.0,
-                                right: 25.0),
+                              top: 20.0,
+                              bottom: 20.0,
+                              left: 25.0,
+                              right: 25.0,
+                            ),
                             child: TextField(
                               focusNode: focusNodeEmail,
                               controller: loginEmailController,
                               keyboardType: TextInputType.emailAddress,
                               style: const TextStyle(
                                   fontSize: 16.0, color: Colors.black),
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 border: InputBorder.none,
-                                icon: Icon(
-                                  Icons.abc,
+                                icon: const Icon(
+                                  Icons.email,
                                   color: Colors.black,
                                   size: 22.0,
                                 ),
-                                hintText: 'Email Address',
-                                hintStyle: TextStyle(fontSize: 17.0),
+                                // labelText: 'Correo electronico',
+                                label: Text(
+                                  "Correo electronico",
+                                  style: TextStyle(
+                                    color: focusNodeEmail.hasFocus
+                                        ? ThemeApp.primary
+                                        : ThemeApp.black,
+                                  ),
+                                ),
+                                hintText: 'Carlos@gmail.com',
+                                hintStyle: const TextStyle(fontSize: 17.0),
                               ),
                               onSubmitted: (_) {
                                 focusNodePassword.requestFocus();
@@ -77,10 +95,9 @@ class _SignInState extends State<SignIn> {
                             ),
                           ),
                           Container(
-                            width: 250.0,
-                            height: 1.0,
-                            color: Colors.grey[400],
-                          ),
+                              width: 250.0,
+                              height: 1.0,
+                              color: Colors.grey[400]),
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 20.0,
@@ -100,7 +117,15 @@ class _SignInState extends State<SignIn> {
                                   size: 22.0,
                                   color: Colors.black,
                                 ),
-                                hintText: 'Password',
+                                hintText: '********',
+                                label: Text(
+                                  "Contraseña",
+                                  style: TextStyle(
+                                    color: focusNodePassword.hasFocus
+                                        ? ThemeApp.primary
+                                        : ThemeApp.black,
+                                  ),
+                                ),
                                 hintStyle: const TextStyle(fontSize: 17.0),
                                 suffixIcon: GestureDetector(
                                   onTap: _toggleLogin,
@@ -125,9 +150,9 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 170.0),
+                  margin:  EdgeInsets.only(top: size.height * 0.27),
                   decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
                         color: ThemeApp.loginGradientStart,

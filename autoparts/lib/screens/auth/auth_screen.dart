@@ -44,7 +44,8 @@ class _AuthScreenState extends State<AuthScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              LottieBuilder.asset(AssetsApp.carBlack),
+              LottieBuilder.asset(AssetsApp.carBlack,
+                  height: size.height * 0.3),
               _buildMenuBar(context),
               SizedBox(
                 width: double.infinity,
@@ -55,17 +56,15 @@ class _AuthScreenState extends State<AuthScreen>
                   onPageChanged: (int i) {
                     FocusScope.of(context).requestFocus(FocusNode());
                     if (i == 0) {
-                      setState(() {
-                        isSignup = false;
-                        right = Colors.white;
-                        left = Colors.black;
-                      });
+                      isSignup = false;
+                      right = Colors.white;
+                      left = Colors.black;
+                      setState(() {});
                     } else if (i == 1) {
-                      setState(() {
-                        isSignup = true;
-                        right = Colors.black;
-                        left = Colors.white;
-                      });
+                      isSignup = true;
+                      right = Colors.black;
+                      left = Colors.white;
+                      setState(() {});
                     }
                   },
                   children: const [
@@ -85,7 +84,7 @@ class _AuthScreenState extends State<AuthScreen>
     final size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 0.9,
-      height: size.height * 0.07,
+      height: size.height * 0.068,
       decoration: const BoxDecoration(
         color: Color(0x552B2B2B),
         borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -101,10 +100,11 @@ class _AuthScreenState extends State<AuthScreen>
               duration: const Duration(milliseconds: 500),
               curve: Curves.bounceOut,
               width: size.width * 0.45,
-              height: 55,
+              height: size.height * 0.068,
               decoration: BoxDecoration(
-                  color: Colors.amberAccent,
-                  borderRadius: BorderRadius.circular(50)),
+                color: Colors.amberAccent,
+                borderRadius: BorderRadius.circular(50),
+              ),
             ),
           ),
           Row(
