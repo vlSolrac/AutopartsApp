@@ -1,6 +1,6 @@
 import 'package:autoparts/screens/auth/sign_in.dart';
 import 'package:autoparts/screens/auth/sign_up.dart';
-import 'package:autoparts/themes/themes.dart';
+import 'package:autoparts/screens/screens.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -34,29 +34,15 @@ class _AuthScreenState extends State<AuthScreen>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-        body: SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Color(0xffED213A),
-                  Color.fromARGB(255, 192, 61, 0),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                tileMode: TileMode.clamp),
-          ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: AuthBackground(
           child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
               const SizedBox(height: 50),
               _buildMenuBar(context),
               Expanded(
@@ -96,7 +82,7 @@ class _AuthScreenState extends State<AuthScreen>
           ),
         ),
       ),
-    ));
+    );
   }
 
   Widget _buildMenuBar(BuildContext context) {
@@ -165,14 +151,11 @@ class _AuthScreenState extends State<AuthScreen>
     _pageController.animateToPage(0,
         duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
     isSignup = false;
-    print(isSignup);
   }
 
   void _onSignUpButtonPress() {
-    _pageController?.animateToPage(1,
+    _pageController.animateToPage(1,
         duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
     isSignup = true;
-
-    print(isSignup);
   }
 }
