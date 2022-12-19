@@ -1,7 +1,9 @@
+import 'package:autoparts/providers/providers.dart';
 import 'package:autoparts/themes/themes.dart';
 import 'package:autoparts/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -11,27 +13,23 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final FocusNode focusNodePassword = FocusNode();
-  final FocusNode focusNodeEmail = FocusNode();
-  final FocusNode focusNodeName = FocusNode();
-
-  bool _obscureTextPassword = true;
-
-  TextEditingController signupEmailController = TextEditingController();
-  TextEditingController signupNameController = TextEditingController();
-  TextEditingController signupPasswordController = TextEditingController();
+  // final FocusNode focusNodePassword = FocusNode();
+  // final FocusNode focusNodeEmail = FocusNode();
+  // final FocusNode focusNodeName = FocusNode();
 
   @override
   void dispose() {
-    focusNodePassword.dispose();
-    focusNodeEmail.dispose();
-    focusNodeName.dispose();
+    // focusNodePassword.dispose();
+    // focusNodeEmail.dispose();
+    // focusNodeName.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final signProvider = Provider.of<SignUpFormProvider>(context);
+
     return Container(
       padding: const EdgeInsets.only(top: 10.0),
       child: SingleChildScrollView(
@@ -51,6 +49,8 @@ class _SignUpState extends State<SignUp> {
                     width: size.width * 0.9,
                     // height: size.height * 0.5,
                     child: Form(
+                      key: signProvider.formSignUp,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       child: Column(
                         children: [
                           TextFieldCustomer(
@@ -77,75 +77,20 @@ class _SignUpState extends State<SignUp> {
                             onChanged: (value) {},
                           ),
                           const SeparaterCustomer(),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 20.0,
-                                left: 25.0,
-                                right: 25.0),
-                            child: TextField(
-                              focusNode: focusNodeEmail,
-                              controller: signupEmailController,
-                              keyboardType: TextInputType.emailAddress,
-                              autocorrect: false,
-                              style: const TextStyle(
-                                  fontSize: 16.0, color: Colors.black),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                icon: Icon(
-                                  Icons.email,
-                                  color: Colors.black,
-                                ),
-                                hintText: 'Correo electronico',
-                                hintStyle: TextStyle(
-                                  fontSize: 16.0,
-                                ),
-                              ),
-                              onSubmitted: (_) {
-                                focusNodePassword.requestFocus();
-                              },
-                            ),
+                          TextFieldCustomer(
+                            hint: "Carlos@gmail.com",
+                            label: "Correo electronico",
+                            suffixIcon: Icons.email,
+                            keyboardType: TextInputType.emailAddress,
+                            onChanged: (value) {},
                           ),
                           const SeparaterCustomer(),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 20.0,
-                              bottom: 20.0,
-                              left: 25.0,
-                              right: 25.0,
-                            ),
-                            child: TextField(
-                              focusNode: focusNodePassword,
-                              controller: signupPasswordController,
-                              obscureText: _obscureTextPassword,
-                              autocorrect: false,
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.black,
-                              ),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                icon: const Icon(
-                                  FontAwesomeIcons.lock,
-                                  color: Colors.black,
-                                ),
-                                hintText: 'Contraseña',
-                                hintStyle: const TextStyle(
-                                  fontSize: 16.0,
-                                ),
-                                suffixIcon: GestureDetector(
-                                  onTap: _toggleSignup,
-                                  child: Icon(
-                                    _obscureTextPassword
-                                        ? FontAwesomeIcons.eye
-                                        : FontAwesomeIcons.eyeSlash,
-                                    size: 15.0,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              onSubmitted: (_) {},
-                            ),
+                          TextFieldPasswordCustomer(
+                            hint: "*******",
+                            label: "Contrase;a",
+                            keyboardType: TextInputType.text,
+                            onChanged: (p0) {},
+                            validator: (p0) {},
                           ),
                         ],
                       ),
@@ -156,31 +101,31 @@ class _SignUpState extends State<SignUp> {
                   margin: EdgeInsets.only(top: size.height * 0.6),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    boxShadow: <BoxShadow>[
+                    boxShadow: [
                       BoxShadow(
-                        color: ThemeApp.loginGradientStart,
+                        color: Colors.green,
                         offset: Offset(1.0, 6.0),
                         blurRadius: 20.0,
                       ),
                       BoxShadow(
-                        color: ThemeApp.loginGradientEnd,
+                        color: Colors.blue,
                         offset: Offset(1.0, 6.0),
                         blurRadius: 20.0,
                       ),
                     ],
                     gradient: LinearGradient(
                         colors: [
-                          ThemeApp.loginGradientEnd,
-                          ThemeApp.loginGradientStart
+                          Colors.blue,
+                          Colors.green,
                         ],
-                        begin: FractionalOffset(0.2, 0.2),
-                        end: FractionalOffset(1.0, 1.0),
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                         stops: [0.0, 1.0],
                         tileMode: TileMode.clamp),
                   ),
                   child: MaterialButton(
                     highlightColor: Colors.transparent,
-                    splashColor: ThemeApp.loginGradientEnd,
+                    splashColor: ThemeApp.primary,
                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     child: const Padding(
                       padding: EdgeInsets.symmetric(
@@ -209,6 +154,88 @@ class _SignUpState extends State<SignUp> {
 
   void _toggleSignUpButton() {
     CustomSnackBar(context, const Text('SignUp button pressed'));
+  }
+}
+
+class TextFieldPasswordCustomer extends StatefulWidget {
+  final String label;
+  final String hint;
+  final IconData? suffixIcon;
+  final IconData? preffixIcon;
+  final Function(String)? onChanged;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
+
+  const TextFieldPasswordCustomer({
+    Key? key,
+    required this.label,
+    required this.hint,
+    this.suffixIcon,
+    this.preffixIcon,
+    this.onChanged,
+    this.keyboardType,
+    this.validator,
+  }) : super(key: key);
+
+  @override
+  State<TextFieldPasswordCustomer> createState() =>
+      _TextFieldPasswordCustomerState();
+}
+
+class _TextFieldPasswordCustomerState extends State<TextFieldPasswordCustomer> {
+  final FocusNode focusNode = FocusNode();
+  @override
+  void initState() {
+    super.initState();
+    focusNode.addListener(() {
+      setState(() {});
+    });
+  }
+
+  bool _obscureTextPassword = true;
+  
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: 20.0,
+        bottom: 20.0,
+        left: 25.0,
+        right: 25.0,
+      ),
+      child: TextFormField(
+        obscureText: _obscureTextPassword,
+        autocorrect: false,
+        focusNode: focusNode,
+        style: const TextStyle(
+          fontSize: 16.0,
+          color: Colors.black,
+        ),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: Icon(
+            FontAwesomeIcons.lock,
+            color: focusNode.hasFocus ? ThemeApp.primary : ThemeApp.black,
+          ),
+          hintText: 'Contraseña',
+          hintStyle: const TextStyle(
+            fontSize: 16.0,
+          ),
+          suffixIcon: GestureDetector(
+            onTap: _toggleSignup,
+            child: Icon(
+              _obscureTextPassword
+                  ? FontAwesomeIcons.eye
+                  : FontAwesomeIcons.eyeSlash,
+              size: 15.0,
+              color: focusNode.hasFocus ? ThemeApp.primary : ThemeApp.black,
+            ),
+          ),
+        ),
+        onChanged: widget.onChanged,
+        validator: widget.validator,
+      ),
+    );
   }
 
   void _toggleSignup() {
@@ -240,6 +267,7 @@ class TextFieldCustomer extends StatefulWidget {
   final IconData? preffixIcon;
   final Function(String)? onChanged;
   final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
 
   const TextFieldCustomer({
     Key? key,
@@ -249,6 +277,7 @@ class TextFieldCustomer extends StatefulWidget {
     this.preffixIcon,
     this.onChanged,
     this.keyboardType,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -282,7 +311,7 @@ class _TextFieldCustomerState extends State<TextFieldCustomer> {
         left: 25.0,
         right: 25.0,
       ),
-      child: TextField(
+      child: TextFormField(
         focusNode: focusNode,
         keyboardType: widget.keyboardType,
         textCapitalization: TextCapitalization.words,
@@ -295,7 +324,7 @@ class _TextFieldCustomerState extends State<TextFieldCustomer> {
           border: InputBorder.none,
           icon: Icon(
             widget.suffixIcon,
-            color: Colors.black,
+            color: focusNode.hasFocus ? ThemeApp.primary : ThemeApp.black,
           ),
           label: Text(
             widget.label,
@@ -307,7 +336,7 @@ class _TextFieldCustomerState extends State<TextFieldCustomer> {
           hintStyle: const TextStyle(fontSize: 16.0),
         ),
         onChanged: widget.onChanged,
-        onSubmitted: (_) {},
+        validator: widget.validator,
       ),
     );
   }

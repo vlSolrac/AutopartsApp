@@ -56,7 +56,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   child: SizedBox(
                     width: size.width * 0.9,
-                    height: size.height * 0.3,
+                    // height: size.height * 0.3,
                     child: Form(
                       key: loginProvider.formKey,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -76,9 +76,11 @@ class _SignInState extends State<SignIn> {
                                   fontSize: 16.0, color: Colors.black),
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.email,
-                                  color: Colors.black,
+                                  color: focusNodeEmail.hasFocus
+                                      ? ThemeApp.primary
+                                      : ThemeApp.black,
                                   size: 22.0,
                                 ),
                                 label: Text(
@@ -115,10 +117,12 @@ class _SignInState extends State<SignIn> {
                                   fontSize: 16.0, color: Colors.black),
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.lock,
                                   size: 22.0,
-                                  color: Colors.black,
+                                  color: focusNodePassword.hasFocus
+                                      ? ThemeApp.primary
+                                      : ThemeApp.black,
                                 ),
                                 hintText: '********',
                                 label: Text(
@@ -137,7 +141,9 @@ class _SignInState extends State<SignIn> {
                                         ? Icons.remove_red_eye
                                         : Icons.remove_red_eye_outlined,
                                     size: 15.0,
-                                    color: Colors.black,
+                                    color: focusNodePassword.hasFocus
+                                        ? ThemeApp.primary
+                                        : ThemeApp.black,
                                   ),
                                 ),
                               ),
@@ -161,42 +167,43 @@ class _SignInState extends State<SignIn> {
                   width: loginProvider.isLoading
                       ? size.width * 0.3
                       : size.width * 0.65,
-                  margin: EdgeInsets.only(top: size.height * 0.28),
+                  margin: EdgeInsets.only(top: size.height * 0.25),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     boxShadow: [
                       BoxShadow(
-                        color: ThemeApp.loginGradientStart,
+                        color: Colors.green,
                         offset: Offset(1.0, 6.0),
                         blurRadius: 20.0,
                       ),
                       BoxShadow(
-                        color: ThemeApp.loginGradientEnd,
+                        color: Colors.blue,
                         offset: Offset(1.0, 6.0),
                         blurRadius: 20.0,
                       ),
                     ],
                     gradient: LinearGradient(
                         colors: [
-                          ThemeApp.loginGradientEnd,
-                          ThemeApp.loginGradientStart
+                          Colors.blue,
+                          Colors.green,
                         ],
-                        begin: FractionalOffset(0.2, 0.2),
-                        end: FractionalOffset(1.0, 1.0),
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                         stops: [0.0, 1.0],
                         tileMode: TileMode.clamp),
                   ),
                   child: MaterialButton(
                     highlightColor: Colors.transparent,
-                    splashColor: ThemeApp.loginGradientEnd,
-                    onPressed: !loginProvider.isLoading
+                    splashColor: ThemeApp.primary,
+                    onPressed: loginProvider.isLoading
                         ? null
                         : () {
                             loginProvider.isValidForm();
-                            // CustomSnackBar(
-                            //   context,
-                            //   const Text('Login button pressed'),
-                            // );
+                            loginProvider.isLoading = true;
+                            CustomSnackBar(
+                              context,
+                              const Text('Login button pressed'),
+                            );
                           },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

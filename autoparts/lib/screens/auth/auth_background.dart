@@ -1,3 +1,4 @@
+import 'package:autoparts/themes/themes.dart';
 import 'package:flutter/material.dart';
 
 class AuthBackground extends StatelessWidget {
@@ -52,11 +53,11 @@ class HeaderBox extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: size.height,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xffED213A),
-            Color.fromARGB(255, 192, 61, 0),
+            ThemeApp.primary,
+            ThemeApp.secondary,
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
