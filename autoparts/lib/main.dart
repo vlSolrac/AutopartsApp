@@ -1,3 +1,4 @@
+import 'package:autoparts/services/services.dart';
 import 'package:flutter/material.dart';
 
 import 'package:autoparts/providers/providers.dart';
@@ -23,6 +24,7 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => LoginFormProvider()),
         ChangeNotifierProvider(create: (_) => SignUpFormProvider()),
+        ChangeNotifierProvider(create: (_) => AuthService()),
       ],
       child: const MyApp(),
     );

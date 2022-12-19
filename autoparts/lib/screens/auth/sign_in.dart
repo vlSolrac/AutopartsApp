@@ -1,10 +1,14 @@
-import 'package:autoparts/providers/auth/login_form_provider.dart';
-import 'package:autoparts/screens/auth/sign_up.dart';
+import 'package:autoparts/models/models.dart';
+import 'package:autoparts/routes/routes_app.dart';
+import 'package:flutter/material.dart';
+
+import 'package:autoparts/screens/screens.dart';
+import 'package:autoparts/providers/providers.dart';
+import 'package:autoparts/services/services.dart';
 import 'package:autoparts/themes/themes.dart';
 import 'package:autoparts/widgets/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -197,13 +201,31 @@ class _SignInState extends State<SignIn> {
                     splashColor: ThemeApp.primary,
                     onPressed: loginProvider.isLoading
                         ? null
-                        : () {
-                            loginProvider.isValidForm();
-                            loginProvider.isLoading = true;
-                            CustomSnackBar(
-                              context,
-                              const Text('Login button pressed'),
-                            );
+                        : () async {
+                            FocusScope.of(context).unfocus();
+                            final authService = Provider.of<AuthService>(
+                                context,
+                                listen: false);
+
+                            if (!loginProvider.isValidForm()) return;
+
+                            final Message res = await authService.loginUser(
+                                loginProvider.email, loginProvider.password);
+
+                            if (res.flag) {
+                              // ignore: use_build_context_synchronously
+                              CustomSnackBar(
+                                context,
+                                Text(res.message),
+                              );
+
+                              Navigator.popAndPushNamed(context, RoutesApp.car);
+                            } else {
+                              // ignore: use_build_context_synchronously
+                              CustomSnackBar(context, Text(res.message),
+                                  backgroundColor: Colors.red);
+                              loginProvider.isLoading = false;
+                            }
                           },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -217,6 +239,8 @@ class _SignInState extends State<SignIn> {
                             )
                           : const Text(
                               'INGRESAR',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Colors.white, fontSize: 25.0),
                             ),

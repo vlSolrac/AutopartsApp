@@ -2,6 +2,7 @@ import 'package:autoparts/providers/providers.dart';
 import 'package:autoparts/themes/themes.dart';
 import 'package:autoparts/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -13,15 +14,13 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  // final FocusNode focusNodePassword = FocusNode();
-  // final FocusNode focusNodeEmail = FocusNode();
-  // final FocusNode focusNodeName = FocusNode();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
-    // focusNodePassword.dispose();
-    // focusNodeEmail.dispose();
-    // focusNodeName.dispose();
     super.dispose();
   }
 
@@ -58,7 +57,7 @@ class _SignUpState extends State<SignUp> {
                             label: "Nombre de Usuario",
                             suffixIcon: Icons.person_rounded,
                             keyboardType: TextInputType.text,
-                            onChanged: (value) {},
+                            onChanged: (value) => signProvider.username = value,
                           ),
                           const SeparaterCustomer(),
                           TextFieldCustomer(
@@ -66,7 +65,7 @@ class _SignUpState extends State<SignUp> {
                             label: "Nombre",
                             suffixIcon: Icons.person_rounded,
                             keyboardType: TextInputType.text,
-                            onChanged: (value) {},
+                            onChanged: (value) => signProvider.name = value,
                           ),
                           const SeparaterCustomer(),
                           TextFieldCustomer(
@@ -74,7 +73,7 @@ class _SignUpState extends State<SignUp> {
                             label: "Apellidos",
                             suffixIcon: Icons.person_rounded,
                             keyboardType: TextInputType.text,
-                            onChanged: (value) {},
+                            onChanged: (value) => signProvider.lastName = value,
                           ),
                           const SeparaterCustomer(),
                           TextFieldCustomer(
@@ -82,23 +81,37 @@ class _SignUpState extends State<SignUp> {
                             label: "Correo electronico",
                             suffixIcon: Icons.email,
                             keyboardType: TextInputType.emailAddress,
-                            onChanged: (value) {},
+                            onChanged: (value) => signProvider.email,
+                            validator: (value) {
+                              String pattern =
+                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$';
+                              RegExp regExp = RegExp(pattern);
+
+                              if (regExp.hasMatch(value ?? '')) {
+                                return null;
+                              } else {
+                                return 'El valor ingresado no luce como un correo';
+                              }
+                            },
                           ),
                           const SeparaterCustomer(),
                           TextFieldPasswordCustomer(
                             hint: "*******",
                             label: "Contrase;a",
                             keyboardType: TextInputType.text,
-                            onChanged: (p0) {},
-                            validator: (p0) {},
+                            onChanged: (value) => signProvider.password = value,
                           ),
                         ],
                       ),
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: size.height * 0.6),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
+                  width: signProvider.isLoading
+                      ? size.width * 0.3
+                      : size.width * 0.8,
+                  margin: EdgeInsets.only(top: size.height * 0.62),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     boxShadow: [
@@ -126,21 +139,39 @@ class _SignUpState extends State<SignUp> {
                   child: MaterialButton(
                     highlightColor: Colors.transparent,
                     splashColor: ThemeApp.primary,
+                    onPressed: signProvider.isLoading
+                        ? null
+                        : () async {
+                            signProvider.isValidForm();
+                            signProvider.isLoading = true;
+                            await Future.delayed(
+                                const Duration(milliseconds: 1000));
+                            // ignore: use_build_context_synchronously
+                            CustomSnackBar(
+                              context,
+                              const Text('Login button pressed'),
+                            );
+                            signProvider.isLoading = false;
+                          },
                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
                         vertical: 10.0,
                         horizontal: 42.0,
                       ),
-                      child: Text(
-                        'REGISTRARSE',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25.0,
-                        ),
-                      ),
+                      child: signProvider.isLoading
+                          ? SpinKitSpinningLines(
+                              color: Colors.white,
+                              size: size.height * 0.03,
+                            )
+                          : const Text(
+                              'REGISTRARSE',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 25.0),
+                            ),
                     ),
-                    onPressed: () => _toggleSignUpButton(),
                   ),
                 )
               ],
@@ -193,7 +224,7 @@ class _TextFieldPasswordCustomerState extends State<TextFieldPasswordCustomer> {
   }
 
   bool _obscureTextPassword = true;
-  
+
   @override
   Widget build(BuildContext context) {
     return Padding(
