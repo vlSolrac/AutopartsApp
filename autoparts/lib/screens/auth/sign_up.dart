@@ -12,23 +12,18 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final FocusNode focusNodePassword = FocusNode();
-  final FocusNode focusNodeConfirmPassword = FocusNode();
   final FocusNode focusNodeEmail = FocusNode();
   final FocusNode focusNodeName = FocusNode();
 
   bool _obscureTextPassword = true;
-  bool _obscureTextConfirmPassword = true;
 
   TextEditingController signupEmailController = TextEditingController();
   TextEditingController signupNameController = TextEditingController();
   TextEditingController signupPasswordController = TextEditingController();
-  TextEditingController signupConfirmPasswordController =
-      TextEditingController();
 
   @override
   void dispose() {
     focusNodePassword.dispose();
-    focusNodeConfirmPassword.dispose();
     focusNodeEmail.dispose();
     focusNodeName.dispose();
     super.dispose();
@@ -38,14 +33,14 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      padding: const EdgeInsets.only(top: 23.0),
+      padding: const EdgeInsets.only(top: 10.0),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Stack(
-              alignment: Alignment.topCenter,
-              children: <Widget>[
+              alignment: Alignment.center,
+              children: [
                 Card(
                   elevation: 3.0,
                   color: Colors.white,
@@ -54,46 +49,34 @@ class _SignUpState extends State<SignUp> {
                   ),
                   child: SizedBox(
                     width: size.width * 0.9,
+                    // height: size.height * 0.5,
                     child: Form(
                       child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 20.0,
-                                left: 25.0,
-                                right: 25.0),
-                            child: TextField(
-                              focusNode: focusNodeName,
-                              controller: signupNameController,
-                              keyboardType: TextInputType.text,
-                              textCapitalization: TextCapitalization.words,
-                              autocorrect: false,
-                              style: const TextStyle(
-                                  fontFamily: 'WorkSansSemiBold',
-                                  fontSize: 16.0,
-                                  color: Colors.black),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                icon: Icon(
-                                  FontAwesomeIcons.user,
-                                  color: Colors.black,
-                                ),
-                                hintText: 'Name',
-                                hintStyle: TextStyle(
-                                    fontFamily: 'WorkSansSemiBold',
-                                    fontSize: 16.0),
-                              ),
-                              onSubmitted: (_) {
-                                focusNodeEmail.requestFocus();
-                              },
-                            ),
+                          TextFieldCustomer(
+                            hint: "vlSolrac",
+                            label: "Nombre de Usuario",
+                            suffixIcon: Icons.person_rounded,
+                            keyboardType: TextInputType.text,
+                            onChanged: (value) {},
                           ),
-                          Container(
-                            width: 250.0,
-                            height: 1.0,
-                            color: Colors.grey[400],
+                          const SeparaterCustomer(),
+                          TextFieldCustomer(
+                            hint: "Carlos",
+                            label: "Nombre",
+                            suffixIcon: Icons.person_rounded,
+                            keyboardType: TextInputType.text,
+                            onChanged: (value) {},
                           ),
+                          const SeparaterCustomer(),
+                          TextFieldCustomer(
+                            hint: "Vela",
+                            label: "Apellidos",
+                            suffixIcon: Icons.person_rounded,
+                            keyboardType: TextInputType.text,
+                            onChanged: (value) {},
+                          ),
+                          const SeparaterCustomer(),
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 20.0,
@@ -106,55 +89,50 @@ class _SignUpState extends State<SignUp> {
                               keyboardType: TextInputType.emailAddress,
                               autocorrect: false,
                               style: const TextStyle(
-                                  fontFamily: 'WorkSansSemiBold',
-                                  fontSize: 16.0,
-                                  color: Colors.black),
+                                  fontSize: 16.0, color: Colors.black),
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 icon: Icon(
-                                  FontAwesomeIcons.envelope,
+                                  Icons.email,
                                   color: Colors.black,
                                 ),
-                                hintText: 'Email Address',
+                                hintText: 'Correo electronico',
                                 hintStyle: TextStyle(
-                                    fontFamily: 'WorkSansSemiBold',
-                                    fontSize: 16.0),
+                                  fontSize: 16.0,
+                                ),
                               ),
                               onSubmitted: (_) {
                                 focusNodePassword.requestFocus();
                               },
                             ),
                           ),
-                          Container(
-                            width: 250.0,
-                            height: 1.0,
-                            color: Colors.grey[400],
-                          ),
+                          const SeparaterCustomer(),
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 20.0,
-                                left: 25.0,
-                                right: 25.0),
+                              top: 20.0,
+                              bottom: 20.0,
+                              left: 25.0,
+                              right: 25.0,
+                            ),
                             child: TextField(
                               focusNode: focusNodePassword,
                               controller: signupPasswordController,
                               obscureText: _obscureTextPassword,
                               autocorrect: false,
                               style: const TextStyle(
-                                  fontFamily: 'WorkSansSemiBold',
-                                  fontSize: 16.0,
-                                  color: Colors.black),
+                                fontSize: 16.0,
+                                color: Colors.black,
+                              ),
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 icon: const Icon(
                                   FontAwesomeIcons.lock,
                                   color: Colors.black,
                                 ),
-                                hintText: 'Password',
+                                hintText: 'Contraseña',
                                 hintStyle: const TextStyle(
-                                    fontFamily: 'WorkSansSemiBold',
-                                    fontSize: 16.0),
+                                  fontSize: 16.0,
+                                ),
                                 suffixIcon: GestureDetector(
                                   onTap: _toggleSignup,
                                   child: Icon(
@@ -166,56 +144,7 @@ class _SignUpState extends State<SignUp> {
                                   ),
                                 ),
                               ),
-                              onSubmitted: (_) {
-                                focusNodeConfirmPassword.requestFocus();
-                              },
-                            ),
-                          ),
-                          Container(
-                            width: 250.0,
-                            height: 1.0,
-                            color: Colors.grey[400],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 20.0,
-                                bottom: 20.0,
-                                left: 25.0,
-                                right: 25.0),
-                            child: TextField(
-                              focusNode: focusNodeConfirmPassword,
-                              controller: signupConfirmPasswordController,
-                              obscureText: _obscureTextConfirmPassword,
-                              autocorrect: false,
-                              style: const TextStyle(
-                                  fontFamily: 'WorkSansSemiBold',
-                                  fontSize: 16.0,
-                                  color: Colors.black),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                icon: const Icon(
-                                  FontAwesomeIcons.lock,
-                                  color: Colors.black,
-                                ),
-                                hintText: 'Confirmation',
-                                hintStyle: const TextStyle(
-                                    fontFamily: 'WorkSansSemiBold',
-                                    fontSize: 16.0),
-                                suffixIcon: GestureDetector(
-                                  onTap: _toggleSignupConfirm,
-                                  child: Icon(
-                                    _obscureTextConfirmPassword
-                                        ? FontAwesomeIcons.eye
-                                        : FontAwesomeIcons.eyeSlash,
-                                    size: 15.0,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              onSubmitted: (_) {
-                                _toggleSignUpButton();
-                              },
-                              textInputAction: TextInputAction.go,
+                              onSubmitted: (_) {},
                             ),
                           ),
                         ],
@@ -224,7 +153,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 340.0),
+                  margin: EdgeInsets.only(top: size.height * 0.6),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     boxShadow: <BoxShadow>[
@@ -240,13 +169,13 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ],
                     gradient: LinearGradient(
-                        colors: <Color>[
+                        colors: [
                           ThemeApp.loginGradientEnd,
                           ThemeApp.loginGradientStart
                         ],
                         begin: FractionalOffset(0.2, 0.2),
                         end: FractionalOffset(1.0, 1.0),
-                        stops: <double>[0.0, 1.0],
+                        stops: [0.0, 1.0],
                         tileMode: TileMode.clamp),
                   ),
                   child: MaterialButton(
@@ -255,13 +184,15 @@ class _SignUpState extends State<SignUp> {
                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
                     child: const Padding(
                       padding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
+                        vertical: 10.0,
+                        horizontal: 42.0,
+                      ),
                       child: Text(
-                        'SIGN UP',
+                        'REGISTRARSE',
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontFamily: 'WorkSansBold'),
+                          color: Colors.white,
+                          fontSize: 25.0,
+                        ),
                       ),
                     ),
                     onPressed: () => _toggleSignUpButton(),
@@ -269,7 +200,7 @@ class _SignUpState extends State<SignUp> {
                 )
               ],
             ),
-            const SizedBox(height: 30)
+            const SizedBox(height: 50)
           ],
         ),
       ),
@@ -285,10 +216,99 @@ class _SignUpState extends State<SignUp> {
       _obscureTextPassword = !_obscureTextPassword;
     });
   }
+}
 
-  void _toggleSignupConfirm() {
-    setState(() {
-      _obscureTextConfirmPassword = !_obscureTextConfirmPassword;
+class SeparaterCustomer extends StatelessWidget {
+  const SeparaterCustomer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 250.0,
+      height: 1.0,
+      color: Colors.grey[400],
+    );
+  }
+}
+
+class TextFieldCustomer extends StatefulWidget {
+  final String label;
+  final String hint;
+  final IconData? suffixIcon;
+  final IconData? preffixIcon;
+  final Function(String)? onChanged;
+  final TextInputType? keyboardType;
+
+  const TextFieldCustomer({
+    Key? key,
+    required this.label,
+    required this.hint,
+    this.suffixIcon,
+    this.preffixIcon,
+    this.onChanged,
+    this.keyboardType,
+  }) : super(key: key);
+
+  @override
+  State<TextFieldCustomer> createState() => _TextFieldCustomerState();
+}
+
+class _TextFieldCustomerState extends State<TextFieldCustomer> {
+  final FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    focusNode.addListener(() {
+      setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: 20.0,
+        bottom: 20.0,
+        left: 25.0,
+        right: 25.0,
+      ),
+      child: TextField(
+        focusNode: focusNode,
+        keyboardType: widget.keyboardType,
+        textCapitalization: TextCapitalization.words,
+        autocorrect: false,
+        style: const TextStyle(
+          fontSize: 16.0,
+          color: Colors.black,
+        ),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          icon: Icon(
+            widget.suffixIcon,
+            color: Colors.black,
+          ),
+          label: Text(
+            widget.label,
+            style: TextStyle(
+              color: focusNode.hasFocus ? ThemeApp.primary : ThemeApp.black,
+            ),
+          ),
+          hintText: widget.hint,
+          hintStyle: const TextStyle(fontSize: 16.0),
+        ),
+        onChanged: widget.onChanged,
+        onSubmitted: (_) {},
+      ),
+    );
   }
 }

@@ -1,8 +1,7 @@
-import 'package:autoparts/screens/auth/sign_in.dart';
-import 'package:autoparts/screens/auth/sign_up.dart';
+import 'package:flutter/material.dart';
+
 import 'package:autoparts/screens/screens.dart';
 import 'package:autoparts/themes/themes.dart';
-import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -44,12 +43,15 @@ class _AuthScreenState extends State<AuthScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                height: size.height * 0.05,
+              ),
               LottieBuilder.asset(AssetsApp.carBlack,
                   height: size.height * 0.3),
               _buildMenuBar(context),
               SizedBox(
                 width: double.infinity,
-                height: size.height * 0.4,
+                height: size.height * 0.45,
                 child: PageView(
                   controller: _pageController,
                   physics: const BouncingScrollPhysics(),
@@ -110,7 +112,7 @@ class _AuthScreenState extends State<AuthScreen>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
+            children: [
               Expanded(
                 child: TextButton(
                   style: ButtonStyle(
@@ -123,7 +125,6 @@ class _AuthScreenState extends State<AuthScreen>
                   ),
                 ),
               ),
-              //Container(height: 33.0, width: 1.0, color: Colors.white),
               Expanded(
                 child: TextButton(
                   style: ButtonStyle(
@@ -144,14 +145,14 @@ class _AuthScreenState extends State<AuthScreen>
   }
 
   void _onSignInButtonPress() {
+    isSignup = false;
     _pageController.animateToPage(0,
         duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-    isSignup = false;
   }
 
   void _onSignUpButtonPress() {
+    isSignup = true;
     _pageController.animateToPage(1,
         duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-    isSignup = true;
   }
 }
