@@ -73,7 +73,7 @@ class _SignInState extends State<SignIn> {
                               left: 25.0,
                               right: 25.0,
                             ),
-                            child: TextField(
+                            child: TextFormField(
                               focusNode: focusNodeEmail,
                               keyboardType: TextInputType.emailAddress,
                               style: const TextStyle(
@@ -101,9 +101,6 @@ class _SignInState extends State<SignIn> {
                               onChanged: (value) {
                                 loginProvider.email = value;
                               },
-                              onSubmitted: (_) {
-                                focusNodePassword.requestFocus();
-                              },
                             ),
                           ),
                           const SeparaterCustomer(),
@@ -114,7 +111,7 @@ class _SignInState extends State<SignIn> {
                               left: 25.0,
                               right: 25.0,
                             ),
-                            child: TextField(
+                            child: TextFormField(
                               focusNode: focusNodePassword,
                               obscureText: _obscureTextPassword,
                               style: const TextStyle(
@@ -153,10 +150,6 @@ class _SignInState extends State<SignIn> {
                               ),
                               onChanged: (value) {
                                 loginProvider.password = value;
-                                print(loginProvider.password);
-                              },
-                              onSubmitted: (_) {
-                                _toggleSignInButton();
                               },
                               textInputAction: TextInputAction.go,
                             ),
@@ -171,9 +164,9 @@ class _SignInState extends State<SignIn> {
                   width: loginProvider.isLoading
                       ? size.width * 0.3
                       : size.width * 0.65,
-                  margin: EdgeInsets.only(top: size.height * 0.25),
+                  margin: EdgeInsets.only(top: size.height * 0.26),
                   decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.green,
@@ -196,54 +189,34 @@ class _SignInState extends State<SignIn> {
                         stops: [0.0, 1.0],
                         tileMode: TileMode.clamp),
                   ),
-                  child: MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: ThemeApp.primary,
-                    onPressed: loginProvider.isLoading
-                        ? null
-                        : () async {
-                            FocusScope.of(context).unfocus();
-                            final authService = Provider.of<AuthService>(
-                                context,
-                                listen: false);
-
-                            if (!loginProvider.isValidForm()) return;
-
-                            final Message res = await authService.loginUser(
-                                loginProvider.email, loginProvider.password);
-
-                            if (res.flag) {
-                              // ignore: use_build_context_synchronously
-                              CustomSnackBar(
-                                context,
-                                Text(res.message),
-                              );
-
-                              Navigator.popAndPushNamed(context, RoutesApp.car);
-                            } else {
-                              // ignore: use_build_context_synchronously
-                              CustomSnackBar(context, Text(res.message),
-                                  backgroundColor: Colors.red);
-                              loginProvider.isLoading = false;
-                            }
-                          },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 42.0,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: MaterialButton(
+                      highlightColor: Colors.transparent,
+                      splashColor: ThemeApp.primary,
+                      onPressed: loginProvider.isLoading
+                          ? null
+                          : () {
+                              // _SignInButton(context, loginProvider);
+                            },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10.0,
+                          horizontal: 42.0,
+                        ),
+                        child: loginProvider.isLoading
+                            ? SpinKitSpinningLines(
+                                color: Colors.white,
+                                size: size.height * 0.03,
+                              )
+                            : const Text(
+                                'INGRESAR',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 25.0),
+                              ),
                       ),
-                      child: loginProvider.isLoading
-                          ? SpinKitSpinningLines(
-                              color: Colors.white,
-                              size: size.height * 0.03,
-                            )
-                          : const Text(
-                              'INGRESAR',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 25.0),
-                            ),
                     ),
                   ),
                 ),
@@ -255,9 +228,50 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  void _toggleSignInButton() {
-    CustomSnackBar(context, const Text('Login button pressed'));
-  }
+  // void _SignInButton(
+  //     BuildContext context) async {
+  //   FocusScope.of(context).unfocus();
+
+
+  //   final authService = Provider.of<AuthService>(context, listen: false);
+
+  //   final Message res = await authService.loginUser(
+  //       loginProvider.email, loginProvider.password);
+
+  //   if (res.flag) {
+  //     // ignore: use_build_context_synchronously
+  //     CustomSnackBar(
+  //       context,
+  //       Text(res.message),
+  //     );
+
+  //     // ignore: use_build_context_synchronously
+  //     Navigator.popAndPushNamed(
+  //         context, RoutesApp.car);
+  //   if (validationForm(loginProvider)) return;
+  //   } else {
+  //     // ignore: use_build_context_synchronously
+  //     CustomSnackBar(context, Text(res.message),
+  //         backgroundColor: Colors.red);
+  //     loginProvider.isLoading = false;
+  //   // }
+  // }
+
+  // bool validationForm(LoginFormProvider loginProvider) {
+  //   if (loginProvider.email.isEmpty) {
+  //     CustomSnackBar(context, const Text("El email es obligatorio"),
+  //         backgroundColor: Colors.red);
+  //     return false;
+  //   }
+
+  //   if (loginProvider.password.isEmpty) {
+  //     CustomSnackBar(context, const Text("La contraseña es obligatoria"),
+  //         backgroundColor: Colors.red);
+  //     return false;
+  //   }
+
+  //   return true;
+  // }
 
   void _toggleLogin() {
     setState(() {
