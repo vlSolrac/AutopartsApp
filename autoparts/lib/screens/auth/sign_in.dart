@@ -196,8 +196,39 @@ class _SignInState extends State<SignIn> {
                       splashColor: ThemeApp.primary,
                       onPressed: loginProvider.isLoading
                           ? null
-                          : () {
-                              // _SignInButton(context, loginProvider);
+                          : () async {
+                              FocusScope.of(context).unfocus();
+
+                              if (loginProvider.email.isEmpty) {
+                                CustomSnackBar(context,
+                                    const Text("El email es requerido"),
+                                    backgroundColor: Colors.red);
+                                return;
+                              }
+
+                              if (loginProvider.password.isEmpty) {
+                                CustomSnackBar(context,
+                                    const Text("La contrase;a es requerida"),
+                                    backgroundColor: Colors.red);
+                                return;
+                              }
+
+                              loginProvider.isLoading = true;
+
+                              final authService = Provider.of<AuthService>(
+                                  context,
+                                  listen: false);
+
+                              final res = await authService.loginUser(
+                                  loginProvider.email, loginProvider.password);
+
+                              if (!res!.flag) {
+                                // ignore: use_build_context_synchronously
+                                CustomSnackBar(context, Text(res.message),
+                                    backgroundColor: Colors.red);
+                              }
+
+                              loginProvider.isLoading = false;
                             },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -232,11 +263,10 @@ class _SignInState extends State<SignIn> {
   //     BuildContext context) async {
   //   FocusScope.of(context).unfocus();
 
-
   //   final authService = Provider.of<AuthService>(context, listen: false);
 
-  //   final Message res = await authService.loginUser(
-  //       loginProvider.email, loginProvider.password);
+  // final Message res = await authService.loginUser(
+  //     loginProvider.email, loginProvider.password);
 
   //   if (res.flag) {
   //     // ignore: use_build_context_synchronously

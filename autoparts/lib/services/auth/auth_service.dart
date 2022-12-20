@@ -57,22 +57,26 @@ class AuthService extends ChangeNotifier {
           message:
               "No se pudo crear correctamente el usuario, vulve a intentar",
           flag: true);
-      print(e);
     }
   }
 
-  Future<Message> loginUser(String email, String password) async {
+  Future<Message?> loginUser(String email, String password) async {
     try {
-      UserCredential res = await FirebaseIntance.firebaseAuth
+      await FirebaseIntance.firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
 
       await getCurrentUse();
 
       return Message(flag: true, message: 'Bienvendio de nuevo');
-    } catch (e) {
-      return Message(flag: false, message: 'Algo salio mal');
-      print(e);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        return Message(flag: false, message: "El email es incorrecto");
+      }
+      if (e.code == "wrong-password") {
+        return Message(flag: false, message: "La contrase;a es incorrecta");
+      }
     }
+    return null;
   }
 
   Future<void> logout() async {
