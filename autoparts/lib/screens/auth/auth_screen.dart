@@ -118,7 +118,7 @@ class _AuthScreenState extends State<AuthScreen>
                   style: ButtonStyle(
                     overlayColor: MaterialStateProperty.all(Colors.transparent),
                   ),
-                  onPressed: _onSignInButtonPress,
+                  onPressed: onSignInButtonPress,
                   child: Text(
                     'Entrar',
                     style: TextStyle(color: left, fontSize: 16.0),
@@ -144,7 +144,7 @@ class _AuthScreenState extends State<AuthScreen>
     );
   }
 
-  void _onSignInButtonPress() {
+  void onSignInButtonPress() {
     isSignup = false;
     _pageController.animateToPage(0,
         duration: const Duration(milliseconds: 500), curve: Curves.decelerate);

@@ -1,4 +1,5 @@
 import 'package:autoparts/providers/providers.dart';
+import 'package:autoparts/services/services.dart';
 import 'package:autoparts/themes/themes.dart';
 import 'package:autoparts/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -81,18 +82,18 @@ class _SignUpState extends State<SignUp> {
                             label: "Correo electronico",
                             suffixIcon: Icons.email,
                             keyboardType: TextInputType.emailAddress,
-                            onChanged: (value) => signProvider.email,
-                            validator: (value) {
-                              String pattern =
-                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$';
-                              RegExp regExp = RegExp(pattern);
+                            onChanged: (value) => signProvider.email = value,
+                            // validator: (value) {
+                            //   String pattern =
+                            //       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$';
+                            //   RegExp regExp = RegExp(pattern);
 
-                              if (regExp.hasMatch(value ?? '')) {
-                                return null;
-                              } else {
-                                return 'El valor ingresado no luce como un correo';
-                              }
-                            },
+                            //   if (regExp.hasMatch(value ?? '')) {
+                            //     return null;
+                            //   } else {
+                            //     return 'El valor ingresado no luce como un correo';
+                            //   }
+                            // },
                           ),
                           const SeparaterCustomer(),
                           TextFieldPasswordCustomer(
@@ -142,15 +143,81 @@ class _SignUpState extends State<SignUp> {
                     onPressed: signProvider.isLoading
                         ? null
                         : () async {
-                            signProvider.isValidForm();
+                            FocusScope.of(context).unfocus();
+
+                            if (signProvider.email.isEmpty) {
+                              CustomSnackBar(
+                                  context, const Text("El email es requerido"),
+                                  backgroundColor: Colors.red);
+                              return;
+                            }
+
+                            if (signProvider.email.isNotEmpty) {
+                              String pattern =
+                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                              RegExp regExp = RegExp(pattern);
+
+                              regExp.hasMatch(signProvider.email)
+                                  ? null
+                                  : CustomSnackBar(
+                                      context,
+                                      const Text(
+                                          "El email no luce como un correo correcto"),
+                                      backgroundColor: Colors.red);
+                            }
+
+                            if (signProvider.password.isEmpty ||
+                                signProvider.password.length < 6) {
+                              CustomSnackBar(
+                                  context,
+                                  const Text(
+                                      "La contraseña es requerida y debe tener mas de 6 caracteres"),
+                                  backgroundColor: Colors.red);
+                              return;
+                            }
+
+                            if (signProvider.username.isEmpty) {
+                              CustomSnackBar(
+                                  context,
+                                  const Text(
+                                      "El nombre de usuario es requerida"),
+                                  backgroundColor: Colors.red);
+                              return;
+                            }
+
+                            if (signProvider.name.isEmpty) {
+                              CustomSnackBar(
+                                  context, const Text("El nombre es requerida"),
+                                  backgroundColor: Colors.red);
+                              return;
+                            }
+
+                            if (signProvider.lastName.isEmpty) {
+                              CustomSnackBar(context,
+                                  const Text("El apellido es requerida"),
+                                  backgroundColor: Colors.red);
+                              return;
+                            }
+
                             signProvider.isLoading = true;
-                            await Future.delayed(
-                                const Duration(milliseconds: 1000));
-                            // ignore: use_build_context_synchronously
-                            CustomSnackBar(
-                              context,
-                              const Text('Login button pressed'),
-                            );
+                            final authService = Provider.of<AuthService>(
+                                context,
+                                listen: false);
+                            final res = await authService.createUser(
+                                email: signProvider.email,
+                                password: signProvider.password,
+                                name: signProvider.name,
+                                middlename: signProvider.lastName,
+                                nickname: signProvider.username);
+
+                            if (!res!.flag) {
+                              // ignore: use_build_context_synchronously
+                              CustomSnackBar(context, Text(res.message),
+                                  backgroundColor: Colors.red);
+
+                              return;
+                            }
+
                             signProvider.isLoading = false;
                           },
                     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
@@ -181,10 +248,6 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
-  }
-
-  void _toggleSignUpButton() {
-    CustomSnackBar(context, const Text('SignUp button pressed'));
   }
 }
 

@@ -21,6 +21,8 @@ class _SignInState extends State<SignIn> {
   final FocusNode focusNodeEmail = FocusNode();
   final FocusNode focusNodePassword = FocusNode();
 
+  final TextEditingController controller = TextEditingController();
+
   bool _obscureTextPassword = true;
 
   @override
@@ -29,12 +31,17 @@ class _SignInState extends State<SignIn> {
     focusNodeEmail.addListener(() {
       setState(() {});
     });
+
+    focusNodePassword.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
     focusNodeEmail.dispose();
     focusNodePassword.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -60,7 +67,6 @@ class _SignInState extends State<SignIn> {
                   ),
                   child: SizedBox(
                     width: size.width * 0.9,
-                    // height: size.height * 0.3,
                     child: Form(
                       key: loginProvider.formKey,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -113,6 +119,7 @@ class _SignInState extends State<SignIn> {
                             ),
                             child: TextFormField(
                               focusNode: focusNodePassword,
+                              controller: controller,
                               obscureText: _obscureTextPassword,
                               style: const TextStyle(
                                   fontSize: 16.0, color: Colors.black),
@@ -158,6 +165,7 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                   ),
+                  // height: size.height * 0.3,
                 ),
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
@@ -203,13 +211,15 @@ class _SignInState extends State<SignIn> {
                                 CustomSnackBar(context,
                                     const Text("El email es requerido"),
                                     backgroundColor: Colors.red);
+                                // focusNodeEmail.requestFocus();
                                 return;
                               }
 
                               if (loginProvider.password.isEmpty) {
                                 CustomSnackBar(context,
-                                    const Text("La contrase;a es requerida"),
+                                    const Text("La contraseña es requerida"),
                                     backgroundColor: Colors.red);
+                                // focusNodePassword.requestFocus();
                                 return;
                               }
 
@@ -226,7 +236,15 @@ class _SignInState extends State<SignIn> {
                                 // ignore: use_build_context_synchronously
                                 CustomSnackBar(context, Text(res.message),
                                     backgroundColor: Colors.red);
+                                loginProvider.isLoading = false;
+                                return;
                               }
+
+                              // ignore: use_build_context_synchronously
+                              CustomSnackBar(context, Text(res.message));
+
+                              // ignore: use_build_context_synchronously
+                              Navigator.popAndPushNamed(context, RoutesApp.car);
 
                               loginProvider.isLoading = false;
                             },
@@ -258,50 +276,6 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
-
-  // void _SignInButton(
-  //     BuildContext context) async {
-  //   FocusScope.of(context).unfocus();
-
-  //   final authService = Provider.of<AuthService>(context, listen: false);
-
-  // final Message res = await authService.loginUser(
-  //     loginProvider.email, loginProvider.password);
-
-  //   if (res.flag) {
-  //     // ignore: use_build_context_synchronously
-  //     CustomSnackBar(
-  //       context,
-  //       Text(res.message),
-  //     );
-
-  //     // ignore: use_build_context_synchronously
-  //     Navigator.popAndPushNamed(
-  //         context, RoutesApp.car);
-  //   if (validationForm(loginProvider)) return;
-  //   } else {
-  //     // ignore: use_build_context_synchronously
-  //     CustomSnackBar(context, Text(res.message),
-  //         backgroundColor: Colors.red);
-  //     loginProvider.isLoading = false;
-  //   // }
-  // }
-
-  // bool validationForm(LoginFormProvider loginProvider) {
-  //   if (loginProvider.email.isEmpty) {
-  //     CustomSnackBar(context, const Text("El email es obligatorio"),
-  //         backgroundColor: Colors.red);
-  //     return false;
-  //   }
-
-  //   if (loginProvider.password.isEmpty) {
-  //     CustomSnackBar(context, const Text("La contraseña es obligatoria"),
-  //         backgroundColor: Colors.red);
-  //     return false;
-  //   }
-
-  //   return true;
-  // }
 
   void _toggleLogin() {
     setState(() {

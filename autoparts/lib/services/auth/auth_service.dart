@@ -8,9 +8,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService extends ChangeNotifier {
   bool hasIdUSer = false;
 
+  AuthService() {
+    hasUser();
+  }
+
   late UserCar currentUser;
 
-  Future<Message> createUser({
+  Future<Message?> createUser({
     required String email,
     required String password,
     required String name,
@@ -51,13 +55,18 @@ class AuthService extends ChangeNotifier {
           .doc(userCar.id)
           .set(userCar.toMap());
 
+      await Future.delayed(const Duration(milliseconds: 1000));
+
       return Message(flag: true, message: 'Usuario creado correctamente');
-    } catch (e) {
-      return Message(
-          message:
-              "No se pudo crear correctamente el usuario, vulve a intentar",
-          flag: true);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        return Message(flag: false, message: "El email es incorrecto");
+      }
+      if (e.code == "wrong-password") {
+        return Message(flag: false, message: "La contrase;a es incorrecta");
+      }
     }
+    return null;
   }
 
   Future<Message?> loginUser(String email, String password) async {
@@ -104,5 +113,11 @@ class AuthService extends ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 1000));
 
     return id;
+  }
+
+  void hasUser() {
+    final id = FirebaseAuth.instance.currentUser?.uid;
+    if (id == null) hasIdUSer = false;
+    hasIdUSer = true;
   }
 }

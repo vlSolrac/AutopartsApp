@@ -1,9 +1,11 @@
+import 'package:autoparts/routes/routes_app.dart';
 import 'package:flutter/material.dart';
 
-import 'package:autoparts/routes/routes_app.dart';
+import 'package:autoparts/services/services.dart';
 import 'package:autoparts/themes/themes.dart';
 import 'package:autoparts/widgets/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
 //Parametes.
@@ -20,13 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(seconds: 3)).then((value) => {
-          if (hasUser)
-            {Navigator.pushReplacementNamed(context, RoutesApp.home)}
-          else
-            {Navigator.pushReplacementNamed(context, RoutesApp.getStart)}
-        });
+    Future.delayed(const Duration(seconds: 3))
+        .then((value) => {nextPage(context)});
   }
 
   @override
@@ -58,5 +55,15 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
     ));
+  }
+
+  nextPage(BuildContext context) {
+    final authService = Provider.of<AuthService>(context, listen: false);
+
+    if (!authService.hasIdUSer) {
+      Navigator.popAndPushNamed(context, RoutesApp.getStart);
+    } else {
+      Navigator.popAndPushNamed(context, RoutesApp.car);
+    }
   }
 }
