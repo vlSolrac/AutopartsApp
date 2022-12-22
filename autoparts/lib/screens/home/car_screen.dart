@@ -61,7 +61,7 @@ class CarScreen extends StatelessWidget {
                     onTap: () async {
                       await authService.logout();
                       // ignore: use_build_context_synchronously
-                      Navigator.popAndPushNamed(context, RoutesApp.auth);
+                      Navigator.popAndPushNamed(context, RoutesApp.getStart);
                     },
                     child: Row(
                       children: const [

@@ -23,10 +23,13 @@ class GetStartScreen extends StatelessWidget {
             children: [
               const GetStartHeader(),
               SizedBox(height: size.height * 0.04),
-              LottieBuilder.asset(
-                AssetsApp.carWhite,
-                width: size.width * 0.95,
-                repeat: true,
+              Hero(
+                tag: "car",
+                child: LottieBuilder.asset(
+                  AssetsApp.carWhite,
+                  width: size.width * 0.95,
+                  repeat: true,
+                ),
               ),
               SizedBox(height: size.height * 0.06),
               GetSatartRoudenButton(

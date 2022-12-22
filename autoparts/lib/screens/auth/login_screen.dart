@@ -23,23 +23,49 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: LoginBackground(
         child: SingleChildScrollView(
-          child: Container(
-            width: size.width * 0.9,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 5,
-                  spreadRadius: 5,
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: size.width * 0.9,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 5,
+                      spreadRadius: 5,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: ChangeNotifierProvider(
-              create: (context) => LoginFormProvider(),
-              child: const LoginForm(),
-            ),
+                child: ChangeNotifierProvider(
+                  create: (context) => LoginFormProvider(),
+                  child: const LoginForm(),
+                ),
+              ),
+              SizedBox(height: size.height * 0.03),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Aun no tienes una cuenta? ",
+                    style: TextStyle(fontSize: size.height * 0.02),
+                  ),
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.popAndPushNamed(context, RoutesApp.signIn),
+                    child: Text(
+                      " Registrate",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: size.height * 0.02),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -63,7 +89,7 @@ class LoginForm extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 16.0),
+            padding: const EdgeInsets.only(top: 10.0),
             child: Text(
               "LOGIN",
               style: TextStyle(
@@ -92,7 +118,7 @@ class LoginForm extends StatelessWidget {
           TextFieldPasswordCustomer(
             label: "Contraseña",
             hint: "**********",
-            keyboardType: TextInputType.emailAddress,
+            keyboardType: TextInputType.text,
             onChanged: (value) => loginProvider.password = value,
             validator: (value) {
               return (value != null && value.length >= 6)

@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-
 import 'package:autoparts/themes/themes.dart';
+import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class LoginBackground extends StatelessWidget {
+class SignInBackground extends StatelessWidget {
   final Widget child;
 
-  const LoginBackground({
+  const SignInBackground({
     Key? key,
     required this.child,
   }) : super(key: key);
@@ -17,21 +16,24 @@ class LoginBackground extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      height: double.infinity,
+      height: size.height,
       child: Stack(
         alignment: Alignment.center,
         children: [
           Positioned(
             top: 0,
-            left: 0,
-            child: Image.asset(
-              AssetsApp.mainTop,
-              width: size.width * 0.35,
-              color: ThemeApp.primary,
+            right: -60,
+            child: Transform.rotate(
+              angle: 310,
+              child: Image.asset(
+                AssetsApp.signUpTop,
+                width: size.width * 0.4,
+                color: ThemeApp.primary,
+              ),
             ),
           ),
           Positioned(
-            top: -size.height * 0.06,
+            top: -size.height * 0.1,
             child: LottieBuilder.asset(
               AssetsApp.carMoving,
               width: size.height * 0.5,
@@ -43,7 +45,7 @@ class LoginBackground extends StatelessWidget {
             child: Image.asset(
               AssetsApp.mainBottom,
               width: size.width * 0.3,
-              color: ThemeApp.primaryDark,
+              color: ThemeApp.primary,
             ),
           ),
           child

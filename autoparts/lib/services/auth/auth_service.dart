@@ -1,6 +1,6 @@
-import 'package:autoparts/models/models.dart';
 import 'package:flutter/material.dart';
 
+import 'package:autoparts/models/models.dart';
 import 'package:autoparts/services/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -88,11 +88,12 @@ class AuthService extends ChangeNotifier {
     return null;
   }
 
-  Future<void> logout() async {
+  Future<Message> logout() async {
     try {
       await FirebaseAuth.instance.signOut();
+      return Message(flag: true, message: 'Hasta la proxima');
     } catch (e) {
-      print(e);
+      return Message(flag: true, message: e.toString());
     }
   }
 

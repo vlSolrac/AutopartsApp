@@ -12,10 +12,10 @@ class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
 
   @override
-  _SignInState createState() => _SignInState();
+  SignInState createState() => SignInState();
 }
 
-class _SignInState extends State<SignIn> {
+class SignInState extends State<SignIn> {
   final FocusNode focusNodeEmail = FocusNode();
   final FocusNode focusNodePassword = FocusNode();
 
@@ -107,7 +107,7 @@ class _SignInState extends State<SignIn> {
                               },
                             ),
                           ),
-                          SeparaterCustomer(),
+                          const SeparaterCustomer(),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 20.0,

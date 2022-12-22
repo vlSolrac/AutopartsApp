@@ -1,6 +1,6 @@
 import 'package:autoparts/themes/themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TextFieldPasswordCustomer extends StatefulWidget {
   final String label;
@@ -59,7 +59,7 @@ class _TextFieldPasswordCustomerState extends State<TextFieldPasswordCustomer> {
         decoration: InputDecoration(
           border: InputBorder.none,
           icon: Icon(
-            Icons.lock,
+            CupertinoIcons.lock_fill,
             color: focusNode.hasFocus ? ThemeApp.primary : ThemeApp.black,
           ),
           label: Text(

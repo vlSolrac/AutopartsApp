@@ -1,7 +1,6 @@
-import 'package:autoparts/services/services.dart';
 import 'package:flutter/material.dart';
 
-import 'package:autoparts/providers/providers.dart';
+import 'package:autoparts/services/services.dart';
 import 'package:autoparts/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:autoparts/routes/routes_app.dart';
@@ -22,7 +21,6 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => SignUpFormProvider()),
         ChangeNotifierProvider(create: (_) => AuthService()),
       ],
       child: const MyApp(),

@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
         body: SizedBox(
       width: double.infinity,
-      height: double.infinity,
+      height: size.height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
