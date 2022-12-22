@@ -6,6 +6,8 @@ class RoutesApp {
   static String splash = "splash";
   static String getStart = "get_start";
   static String auth = "auth";
+  static String login = "login";
+  static String signIn = "signIn";
   static String home = "home";
   static String car = "car";
   static String addCar = "addCar";
@@ -17,6 +19,8 @@ class RoutesApp {
     home: (p0) => const HomeScreen(),
     car: (p0) => const CarScreen(),
     getStart: (p0) => const GetStartScreen(),
+    login: (p0) => const LoginScreen(),
+    signIn: (p0) => const SignInScreen(),
     splash: (p0) => const SplashScreen(),
     auth: (p0) => const AuthScreen(),
     addCar: (p0) => const AddCarScreen(),

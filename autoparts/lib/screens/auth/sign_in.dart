@@ -1,14 +1,12 @@
-import 'package:autoparts/models/models.dart';
-import 'package:autoparts/routes/routes_app.dart';
 import 'package:flutter/material.dart';
 
-import 'package:autoparts/screens/screens.dart';
 import 'package:autoparts/providers/providers.dart';
+import 'package:autoparts/routes/routes_app.dart';
 import 'package:autoparts/services/services.dart';
 import 'package:autoparts/themes/themes.dart';
 import 'package:autoparts/widgets/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -109,7 +107,7 @@ class _SignInState extends State<SignIn> {
                               },
                             ),
                           ),
-                          const SeparaterCustomer(),
+                          SeparaterCustomer(),
                           Padding(
                             padding: const EdgeInsets.only(
                               top: 20.0,

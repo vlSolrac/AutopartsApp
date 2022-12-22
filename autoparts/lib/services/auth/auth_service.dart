@@ -117,7 +117,10 @@ class AuthService extends ChangeNotifier {
 
   void hasUser() {
     final id = FirebaseAuth.instance.currentUser?.uid;
-    if (id == null) hasIdUSer = false;
+    if (id == null) {
+      hasIdUSer = false;
+      return;
+    }
     hasIdUSer = true;
   }
 }

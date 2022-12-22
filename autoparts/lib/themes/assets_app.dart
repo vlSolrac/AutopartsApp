@@ -18,6 +18,7 @@ class AssetsApp {
   static const carWait = "assets/lotties/please_wait.json";
   static const carLoader = "assets/lotties/car_loader.json";
   static const carBlack = "assets/lotties/car_black.json";
+  static const carMoving = "assets/lotties/car_moving.json";
 
   // GIFTS
   static const jarLoading = "assets/gifts/jar_loading.gif";

@@ -45,31 +45,33 @@ class CarScreen extends StatelessWidget {
               width: size.width * 0.7,
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {}, icon: const Icon(Icons.person)),
-                      const Text(
-                        "Perfil",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      children: const [
+                        Icon(Icons.person),
+                        Text(
+                          "Perfil",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () async {
-                            print("object");
-                            await authService.logout();
-                            // ignore: use_build_context_synchronously
-                            Navigator.popAndPushNamed(context, RoutesApp.auth);
-                          },
-                          icon: const Icon(Icons.logout)),
-                      const Text(
-                        "Cerrar Sesión",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )
-                    ],
+                  GestureDetector(
+                    onTap: () async {
+                      await authService.logout();
+                      // ignore: use_build_context_synchronously
+                      Navigator.popAndPushNamed(context, RoutesApp.auth);
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.logout),
+                        Text(
+                          "Cerrar Sesión",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),

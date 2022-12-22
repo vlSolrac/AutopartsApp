@@ -57,7 +57,7 @@ class HeaderBox extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             ThemeApp.primary,
-            ThemeApp.secondary,
+            ThemeApp.primaryDark,
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

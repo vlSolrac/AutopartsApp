@@ -1,9 +1,12 @@
-import 'package:autoparts/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-class GetStartBackgroud extends StatelessWidget {
+import 'package:autoparts/themes/themes.dart';
+import 'package:lottie/lottie.dart';
+
+class LoginBackground extends StatelessWidget {
   final Widget child;
-  const GetStartBackgroud({
+
+  const LoginBackground({
     Key? key,
     required this.child,
   }) : super(key: key);
@@ -11,9 +14,10 @@ class GetStartBackgroud extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return SizedBox(
-      height: double.infinity,
       width: double.infinity,
+      height: double.infinity,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -27,12 +31,19 @@ class GetStartBackgroud extends StatelessWidget {
             ),
           ),
           Positioned(
+            top: -size.height * 0.04,
+            child: LottieBuilder.asset(
+              AssetsApp.carMoving,
+              width: size.height * 0.5,
+            ),
+          ),
+          Positioned(
             bottom: 0,
-            right: 0,
+            left: 0,
             child: Image.asset(
-              AssetsApp.loginBottom,
-              width: size.width * 0.45,
-              color: ThemeApp.primary,
+              AssetsApp.mainBottom,
+              width: size.width * 0.3,
+              color: ThemeApp.primaryDark,
             ),
           ),
           child

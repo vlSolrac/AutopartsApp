@@ -1,3 +1,4 @@
+import 'package:autoparts/routes/routes_app.dart';
 import 'package:flutter/material.dart';
 
 import 'package:autoparts/themes/themes.dart';
@@ -21,14 +22,26 @@ class GetStartScreen extends StatelessWidget {
           child: Column(
             children: [
               const GetStartHeader(),
-              SizedBox(height: size.height * 0.06),
+              SizedBox(height: size.height * 0.04),
               LottieBuilder.asset(
                 AssetsApp.carWhite,
                 width: size.width * 0.95,
                 repeat: true,
               ),
-              SizedBox(height: size.height * 0.05),
-              const GetSatartRoudenButton(),
+              SizedBox(height: size.height * 0.06),
+              GetSatartRoudenButton(
+                text: "INICIAR",
+                color: ThemeApp.primary,
+                onPressed: () =>
+                    Navigator.popAndPushNamed(context, RoutesApp.login),
+              ),
+              SizedBox(height: size.height * 0.02),
+              GetSatartRoudenButton(
+                text: "REGISTRARSE",
+                color: ThemeApp.primaryDark,
+                onPressed: () =>
+                    Navigator.popAndPushNamed(context, RoutesApp.signIn),
+              ),
             ],
           ),
         ),
@@ -36,4 +49,3 @@ class GetStartScreen extends StatelessWidget {
     );
   }
 }
-
