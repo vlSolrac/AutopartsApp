@@ -225,8 +225,15 @@ class SignInForm extends StatelessWidget {
                           final authService =
                               Provider.of<AuthService>(context, listen: false);
 
-                          final res = await authService.loginUser(
-                              singInProvider.email, singInProvider.password);
+                          final res = await authService.createUser(
+                            email: singInProvider.email,
+                            password: singInProvider.password,
+                            middlename: singInProvider.lastName,
+                            name: singInProvider.name,
+                            nickname: singInProvider.username,
+                            celphone: null,
+                            image: null,
+                          );
 
                           if (!res!.flag) {
                             // ignore: use_build_context_synchronously

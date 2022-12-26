@@ -8,7 +8,7 @@ class CarDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //global variables.
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     // final statusBar = MediaQuery.of(context).viewPadding;
     
 

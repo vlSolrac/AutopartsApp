@@ -43,7 +43,7 @@ class AuthService extends ChangeNotifier {
         password: password,
         nickname: nickname,
         celphone: celphone,
-        middlename: middlename,
+        lastname: middlename,
         name: name,
         creationDate: Timestamp.now(),
       );
@@ -101,6 +101,8 @@ class AuthService extends ChangeNotifier {
     final id = FirebaseAuth.instance.currentUser?.uid;
     if (id == null) return "";
 
+
+
     final userCar = await FirebaseIntance.fireBase
         .collection("Autoparts")
         .doc("Auth")
@@ -108,7 +110,7 @@ class AuthService extends ChangeNotifier {
         .doc(id)
         .get();
 
-    currentUser = UserCar.fromMap(userCar.data()!);
+    currentUser = UserCar.fromSnapshot(userCar);
     currentUser.id = userCar.id;
 
     await Future.delayed(const Duration(milliseconds: 1000));
@@ -122,6 +124,7 @@ class AuthService extends ChangeNotifier {
       hasIdUSer = false;
       return;
     }
+    getCurrentUse();
     hasIdUSer = true;
   }
 }

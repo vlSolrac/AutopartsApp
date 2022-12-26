@@ -7,7 +7,7 @@ class UserCar {
     required this.email,
     required this.password,
     required this.nickname,
-    required this.middlename,
+    required this.lastname,
     required this.name,
     required this.creationDate,
     this.celphone,
@@ -18,7 +18,7 @@ class UserCar {
   String email;
   String password;
   String nickname;
-  String middlename;
+  String lastname;
   String name;
   Timestamp creationDate;
   String? celphone;
@@ -33,8 +33,8 @@ class UserCar {
         email: json["Email"],
         password: json["Password"],
         nickname: json["Nickname"] ?? "",
-        celphone: json["CelPhone"],
-        middlename: json["MiddleName"],
+        celphone: json["CelPhone"] ?? "",
+        lastname: json["Lastname"],
         name: json["Name"],
         creationDate: json["CreationDate"],
         img: json["Img"],
@@ -47,7 +47,7 @@ class UserCar {
         password: json["Password"],
         nickname: json["Nickname"] ?? "",
         celphone: json["CelPhone"],
-        middlename: json["MiddleName"],
+        lastname: json["Lastname"],
         name: json["Name"],
         creationDate: json["CreationDate"],
         img: json["Img"],
@@ -58,7 +58,7 @@ class UserCar {
         "Password": password,
         "Nickname": nickname,
         "CelPhone": celphone,
-        "MiddleName": middlename,
+        "Lastname": lastname,
         "Name": name,
         "Img": img,
         "CreationDate": creationDate

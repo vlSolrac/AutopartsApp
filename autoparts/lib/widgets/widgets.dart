@@ -1,3 +1,5 @@
+export 'package:autoparts/widgets/home/drawer_customer.dart';
+
 export 'package:autoparts/helpers/ui/snackbar.dart';
 export 'package:autoparts/screens/home/get_start/get_start_background.dart';
 export 'package:autoparts/widgets/animation_image.dart';
