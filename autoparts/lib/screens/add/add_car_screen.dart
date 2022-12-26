@@ -14,6 +14,7 @@ class AddCarScreen extends StatelessWidget {
     // final statusBar = MediaQuery.of(context).viewPadding;
 
     return Scaffold(
+      appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
@@ -87,6 +88,7 @@ class AddCarScreen extends StatelessWidget {
                 child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
                     child: Column(
                       children: [
                         TextFieldCustomer(

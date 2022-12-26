@@ -69,7 +69,7 @@ class AuthService extends ChangeNotifier {
     return null;
   }
 
-  Future<Message?> loginUser(String email, String password) async {
+  Future<Message> loginUser(String email, String password) async {
     try {
       await FirebaseIntance.firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
@@ -82,10 +82,10 @@ class AuthService extends ChangeNotifier {
         return Message(flag: false, message: "El email es incorrecto");
       }
       if (e.code == "wrong-password") {
-        return Message(flag: false, message: "La contrase;a es incorrecta");
+        return Message(flag: false, message: "La contraseña es incorrecta");
       }
+      return Message(message: e.code, flag: false);
     }
-    return null;
   }
 
   Future<Message> logout() async {
@@ -100,8 +100,6 @@ class AuthService extends ChangeNotifier {
   Future<String> getCurrentUse() async {
     final id = FirebaseAuth.instance.currentUser?.uid;
     if (id == null) return "";
-
-
 
     final userCar = await FirebaseIntance.fireBase
         .collection("Autoparts")
