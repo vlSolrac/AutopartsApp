@@ -1,5 +1,6 @@
 import 'package:autoparts/themes/themes.dart';
 import 'package:autoparts/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddCarScreen extends StatelessWidget {
@@ -17,7 +18,7 @@ class AddCarScreen extends StatelessWidget {
       appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.save),
       ),
       body: SizedBox(
         width: double.infinity,
@@ -94,33 +95,40 @@ class AddCarScreen extends StatelessWidget {
                         TextFieldCustomer(
                           label: "Nombre del carro",
                           hint: "Stratus",
+                          suffixIcon: CupertinoIcons.car_detailed,
                           onChanged: (p0) {},
                         ),
                         TextFieldCustomer(
                           label: "Año",
                           hint: "2006",
+                          suffixIcon: Icons.calendar_month_outlined,
                           onChanged: (p0) {},
                         ),
                         TextFieldCustomer(
                           label: "Motor",
                           hint: "2.4",
+                          suffixIcon: CupertinoIcons.asterisk_circle,
                           onChanged: (p0) {},
                         ),
                         TextFieldCustomer(
                           label: "Marca",
                           hint: "Dodge",
+                          suffixIcon: CupertinoIcons.car,
                           onChanged: (p0) {},
                         ),
                         TextFieldCustomer(
-                          label: "label",
-                          hint: "hint",
+                          label: "Precio del carro",
+                          hint: "60000",
+                          suffixIcon: Icons.attach_money_sharp,
                           onChanged: (p0) {},
                         ),
-                        TextFieldCustomer(
-                          label: "label",
-                          hint: "hint",
-                          onChanged: (p0) {},
-                        ),
+                        CalendarFieldCustomer(
+                          label: "Fecha de compra",
+                          hint: "29/08/2009",
+                          onChanged: (p0) {
+                            print({p0});
+                          },
+                        )
                       ],
                     ),
                   ),

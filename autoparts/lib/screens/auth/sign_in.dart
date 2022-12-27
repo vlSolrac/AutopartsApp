@@ -230,7 +230,7 @@ class SignInState extends State<SignIn> {
                               final res = await authService.loginUser(
                                   loginProvider.email, loginProvider.password);
 
-                              if (!res!.flag) {
+                              if (!res.flag) {
                                 // ignore: use_build_context_synchronously
                                 CustomSnackBar(context, Text(res.message),
                                     backgroundColor: Colors.red);
