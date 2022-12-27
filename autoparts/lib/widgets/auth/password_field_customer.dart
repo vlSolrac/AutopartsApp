@@ -44,7 +44,6 @@ class _TextFieldPasswordCustomerState extends State<TextFieldPasswordCustomer> {
     return Padding(
       padding: const EdgeInsets.only(
         top: 20.0,
-        bottom: 20.0,
         left: 25.0,
         right: 25.0,
       ),

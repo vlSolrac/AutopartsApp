@@ -96,37 +96,36 @@ class AddCarScreen extends StatelessWidget {
                           label: "Nombre del carro",
                           hint: "Stratus",
                           suffixIcon: CupertinoIcons.car_detailed,
-                          onChanged: (p0) {},
+                          onChanged: (value) {},
                         ),
                         TextFieldCustomer(
                           label: "Año",
                           hint: "2006",
                           suffixIcon: Icons.calendar_month_outlined,
-                          onChanged: (p0) {},
+                          onChanged: (value) {},
                         ),
                         TextFieldCustomer(
-                          label: "Motor",
+                          label: "Motor", 
                           hint: "2.4",
                           suffixIcon: CupertinoIcons.asterisk_circle,
-                          onChanged: (p0) {},
+                          onChanged: (value) {},
                         ),
                         TextFieldCustomer(
                           label: "Marca",
                           hint: "Dodge",
                           suffixIcon: CupertinoIcons.car,
-                          onChanged: (p0) {},
+                          onChanged: (value) {},
                         ),
                         TextFieldCustomer(
                           label: "Precio del carro",
                           hint: "60000",
                           suffixIcon: Icons.attach_money_sharp,
-                          onChanged: (p0) {},
+                          onChanged: (value) {},
                         ),
                         CalendarFieldCustomer(
                           label: "Fecha de compra",
                           hint: "29/08/2009",
-                          onChanged: (p0) {
-                            print({p0});
+                          onChanged: (value) {
                           },
                         )
                       ],

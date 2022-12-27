@@ -1,7 +1,7 @@
 import 'package:autoparts/themes/themes.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CalendarFieldCustomer extends StatefulWidget {
   final String label;
@@ -53,15 +53,14 @@ class _CalendarFieldCustomerState extends State<CalendarFieldCustomer> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 20.0,
-        bottom: 20.0,
+        top: 20,
         left: 25.0,
         right: 25.0,
       ),
       child: TextFormField(
         focusNode: focusNode,
         controller: controller,
-        keyboardType: widget.keyboardType,
+        keyboardType: TextInputType.datetime,
         textCapitalization: TextCapitalization.words,
         autocorrect: false,
         style: const TextStyle(
@@ -84,18 +83,11 @@ class _CalendarFieldCustomerState extends State<CalendarFieldCustomer> {
           hintStyle: const TextStyle(fontSize: 16.0),
         ),
         onChanged: widget.onChanged,
-        validator: widget.validator,
-        onTap: () async {
-          DateTime? pickedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(1990),
-            lastDate: DateTime(2101),
-          );
+        validator: (value) {
+          if (value == null) return null;
 
-          if (pickedDate != null) {
-            controller.text = pickedDate.toString();
-            setState(() {});
+          if (value.contains("-")) {
+            return "Se debe separar por -> /";
           }
         },
       ),
